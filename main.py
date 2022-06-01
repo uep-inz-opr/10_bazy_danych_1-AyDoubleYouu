@@ -35,6 +35,6 @@ if __name__ == "__main__":
         cursor.executemany("INSERT INTO polaczenia (from_subscriber, to_subscriber, datetime, duration , celltower) VALUES (?, ?, ?, ?, ?);", rows)
         sqlite_connection.commit()
 
-rg = ReportGenerator(sqlite_connection, escape_string="?")
-rg.generate_report()
-rg.get_report()
+        rg = ReportGenerator(sqlite_connection, escape_string="?")
+        rg.generate_report()
+        print(rg.get_report())
