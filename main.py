@@ -21,22 +21,22 @@ class ReportGenerator:
        
 if __name__ == "__main__":
 
-    sqlite_connection = sqlite3.connect(":memory:", detect_types=sqlite3.PARSE_DECLTYPES|sqlite3.PARSE_COLNAMES)
-    cur= sqlite_connection.cursor()
+  sqlite_connection = sqlite3.connect(":memory:", detect_types=sqlite3.PARSE_DECLTYPES|sqlite3.PARSE_COLNAMES)
+  cur= sqlite_connection.cursor()
 
-    cur.execute('''CREATE TABLE polaczenia (from_subscriber data_type INTEGER, 
+  cur.execute('''CREATE TABLE polaczenia (from_subscriber data_type INTEGER, 
                   to_subscriber data_type INTEGER, 
                   datetime data_type timestamp, 
                   duration data_type INTEGER , 
                   celltower data_type INTEGER);''') 
 
-    with open(polaczenia_duze,'r') as file: 
+  with open(polaczenia_duze,'r') as file: 
         reader = csv.reader(file, delimiter = ";") 
-        header = next(reader) 
+        next(reader, None) 
         rows = [x for x in reader]
         cur.executemany("INSERT INTO polaczenia (from_subscriber, to_subscriber, datetime, duration , celltower) VALUES (?, ?, ?, ?, ?);", rows)
         sqlite_connection.commit()
 
         rg = ReportGenerator(sqlite_connection, escape_string="?")
         rg.generate_report()
-        rg.get_report()
+        print(rg.get_report())
