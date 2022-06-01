@@ -18,6 +18,7 @@ def main():
     rows = [x for x in reader]
     cursor.executemany("INSERT INTO polaczenia (from_subscriber, to_subscriber, datetime, duration , celltower) VALUES (?, ?, ?, ?, ?);", rows)
     sqlite_connection.commit()
+    cursor.execute(f"Select sum(duration) from polaczenia")
     print(cursor.fetchall()[0])
 if __name__ == "__main__":
     main
