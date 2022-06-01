@@ -7,13 +7,12 @@ class ReportGenerator:
     self.report_text = None
     self.escape_string = escape_string
 
-  def generate_report(self, user_id):
+  def generate_report(self):
     cursor = self.connection.cursor()
     sql_query = f"Select sum(duration) from polaczenia where from_subscriber ={self.escape_string}"
-    args = (user_id,)
-    cursor.execute(sql_query, args)
+    cursor.execute(sql_query)
     result = cursor.fetchone()[0]
-    self.report_text = f"Łączny czas trwania dla użytkownika {user_id} to {result}"
+    self.report_text = f"{result}"
 
   def get_report(self):	
     return self.report_text
