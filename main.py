@@ -18,6 +18,6 @@ def main():
     rows = [x for x in reader]
     cur.executemany("INSERT INTO polaczenia (from_subscriber, to_subscriber, datetime, duration , celltower) VALUES (?, ?, ?, ?, ?);", rows)
     sqlite_con.commit()
-
+    print(cur.fetchall()[0])
 if __name__ == "__main__":
-    pass
+    main
